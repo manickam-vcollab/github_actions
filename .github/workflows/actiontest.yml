@@ -1,11 +1,17 @@
 name: learn-github-actions
 on: [push]
 jobs:
-  check-bulid-html:
+  check-hello-world:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-python@v1
         with:
           python-version: 3.7
+
+      - name: Checkout tools repo
+      - uses: actions/checkout@v2
+        with:
+          repository: my-org/my-tools
+          path: my-tool
       - run: echo "Hello World!"
