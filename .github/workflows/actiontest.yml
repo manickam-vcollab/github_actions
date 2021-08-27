@@ -1,14 +1,28 @@
-name: learn-github-actions
+name: build_docs
 on: [push]
+
 jobs:
-  check-hello-world:
-    runs-on: windows-latest
+  build-spinix:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        - run: echo "ðŸŽ‰ The job was automatically triggered by a ${{ github.event_name }} event."
+        - run: echo "ðŸ§ This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+        - run: echo "ðŸ”Ž The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+        - name: Check out repository code
+          uses: actions/checkout@v2
+        - name: setup python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.8 #install the python needed
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
+        - name: Building documentation
+          run: |
+            sphinx-build source public -b html
+        - name: List files in the repository
+          run: |
+            ls ${{ github.workspace }}
+        - run: echo "ðŸ This job's status is ${{ job.status }}."
+
