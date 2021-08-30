@@ -34,10 +34,10 @@ jobs:
           with: 
             node-version: '12'
         - name: Install packages
-          run: npm install
+          run: |
+            npm install
         - name: Depoly to surge
-        - name: Install Surge
           run: |
             npm install -g surge   
-            surge ./build my-docs.surge.sh --token ${{secrets.TOKEN}}     
+            surge ./public my-docs.surge.sh --token ${{secrets.TOKEN}}     
 
