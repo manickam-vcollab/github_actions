@@ -30,14 +30,10 @@ jobs:
           with: 
             branch: gh-pages
             folder: public
-        - uses: actions/setup-node@v2-beta
-          with: 
-            node-version: '12'
-        - name: Install packages
-          run: |
-            npm install
-        - name: Depoly to surge
-          run: |
-            npm install -g surge   
-            surge ./public my-docs.surge.sh --token ${{secrets.TOKEN}}     
+        - name: Node Install    
+        - uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+        - run: |
+            npm install    
 
