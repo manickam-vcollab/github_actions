@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   build-spinix:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
         - run: echo " The job was automatically triggered by a ${{ github.event_name }} event."
         - run: echo " This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -25,9 +25,19 @@ jobs:
           run: |
             ls ${{ github.workspace }}
         - run: echo " This job's status is ${{ job.status }}."
-        - name: Depoly
+        - name: Depoly to gh-pages
           uses: JamesIves/github-pages-deploy-action@4.1.4
           with: 
             branch: gh-pages
             folder: public
+        - uses: actions/setup-node@v2-beta
+          with: 
+            node-version: '12'
+        - name: Install packages
+          run: npm install
+        - name: Depoly to surge
+        - name: Install Surge
+          run: |
+            npm install -g surge   
+            surge ./build my-docs.surge.sh --token ${{secrets.TOKEN}}     
 
